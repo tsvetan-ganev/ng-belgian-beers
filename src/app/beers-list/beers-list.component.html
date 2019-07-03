@@ -1,0 +1,54 @@
+<mat-card>
+  <header>
+    <form [formGroup]="headerControls">
+      <mat-form-field>
+        <mat-label>Sort by</mat-label>
+        <mat-select formControlName="sort" (selectionChange)="onSortOptionChange($event)">
+          <mat-option *ngFor="let sortOption of sortingOptions" [value]="sortOption">
+            {{ sortOption.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="slider">
+        <label for="alc-slider">Alcohol</label>
+        <div class="slider-control">
+          <mat-slider
+            class="mat-slider"
+            id="alc-slider"
+            [min]="alcoholBoundaries.min"
+            [max]="alcoholBoundaries.max"
+            color="primary"
+            step="0.1"
+            thumbLabel="Alcohol %"
+            [value]="alcoholPercentageFilter"
+            (change)="onAlcoholSliderChange($event)"
+          >
+          </mat-slider>
+          <div class="slider-value" *ngIf="alcoholBoundaries.min < alcoholPercentageFilter">
+            {{ alcoholBoundaries.min }}% – {{ alcoholPercentageFilter }}%
+          </div>
+          <div class="slider-value" *ngIf="alcoholBoundaries.min === alcoholPercentageFilter">
+            {{ alcoholBoundaries.min }}%
+          </div>
+        </div>
+      </div>
+    </form>
+  </header>
+  <mat-card-content>
+    <ul class="beer-list">
+      <li class="beer-list-item" *ngFor="let beer of beersList">
+        <img src="/assets/images/{{ beer.id }}.jpg" [alt]="beer.name" />
+
+        <div class="beer-list-item__metadata">
+          <h3>
+            <span class="beer-name">{{ beer.name }}</span>
+            <span class="alcohol-percentage mat-bg-accent">{{ beer.alcohol }}%</span>
+          </h3>
+          <p>
+            {{ beer.description }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

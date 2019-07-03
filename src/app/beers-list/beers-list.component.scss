@@ -1,0 +1,118 @@
+$mobileWidth: 480px;
+$reallyLightGray: rgba(0, 0, 0, 0.07);
+
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mat-card {
+  padding: 0;
+}
+
+header {
+  background-color: $reallyLightGray;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin-bottom: 16px;
+  padding: 16px;
+
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+    @media only screen and (max-width: $mobileWidth) {
+      flex-direction: column;
+    }
+  }
+
+  mat-form-field {
+    min-width: 280px;
+  }
+
+  .slider {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    label {
+      margin-right: 4px;
+    }
+
+    .slider-control {
+      .slider-value {
+        margin-top: -16px;
+        text-align: center;
+      }
+    }
+
+    .mat-slider {
+      width: 280px;
+    }
+  }
+}
+
+mat-card-content {
+  padding: 16px;
+}
+
+.beer-list {
+  padding: 0;
+}
+
+.beer-list-item {
+  &:not(:last-of-type) {
+    border-bottom: 1px solid $reallyLightGray;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  display: flex;
+  align-items: flex-start;
+
+  .alcohol-percentage {
+    $width: 48px;
+
+    margin-left: 8px;
+    background-color: accent-color();
+    border-radius: $width / 4;
+    padding-top: $width / 12;
+    padding-right: $width / 4;
+    padding-left: $width / 4;
+    padding-bottom: $width / 12;
+    text-align: center;
+    min-width: $width;
+    height: $width / 2;
+    font-weight: bold;
+    color: white;
+  }
+
+  img {
+    $size: 124px;
+    display: inline-block;
+    width: $size;
+    height: $size;
+  }
+
+  &__metadata {
+    flex: 1;
+
+    h3 {
+      margin: 0;
+
+      .beer-name {
+        letter-spacing: 0.125em;
+        font-weight: 500;
+      }
+    }
+
+    p {
+      max-width: 640px;
+      padding-right: 12px;
+    }
+  }
+}

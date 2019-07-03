@@ -1,0 +1,77 @@
+@import '~@angular/material/theming';
+
+$color-pallete: (
+  50: #f9e0e0,
+  100: #f0b3b3,
+  200: #e68080,
+  300: #db4d4d,
+  400: #d42626,
+  500: #cc0000,
+  600: #c70000,
+  700: #c00000,
+  800: #b90000,
+  900: #ad0000,
+  A100: #fff2cc,
+  A200: #ffe599,
+  A400: #ffd966,
+  A700: #f1c232,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+@include mat-core();
+
+$belgian-beers-primary: mat-palette($color-pallete);
+$belgian-beers-accent: mat-palette($color-pallete, A200, A100, A400);
+$belgian-beers-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$belgian-beers-theme: mat-light-theme(
+  $belgian-beers-primary,
+  $belgian-beers-accent,
+  $belgian-beers-warn
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($belgian-beers-theme);
+
+.mat-bg-primary {
+  background-color: mat-color($color-pallete, 500);
+}
+
+.mat-color-primary {
+  color: mat-color($color-pallete, 500);
+}
+
+.mat-bg-accent {
+  background-color: mat-color($color-pallete, A700);
+}
+
+.mat-color-accent {
+  color: mat-color($color-pallete, A700);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
