@@ -1,0 +1,124 @@
+$mobileWidth: 420px;
+
+:host {
+  display: block;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+  position: relative;
+}
+
+.beer-list-item {
+  list-style-type: none;
+  form {
+    display: flex;
+    align-items: flex-start;
+
+    .alcohol-percentage {
+      $width: 48px;
+
+      margin-left: 8px;
+      border-radius: $width / 4;
+      padding-top: $width / 12;
+      padding-right: $width / 4;
+      padding-left: $width / 4;
+      padding-bottom: $width / 12;
+      text-align: center;
+      min-width: $width;
+      font-weight: bold;
+      color: white;
+    }
+
+    img {
+      $size: 124px;
+      display: inline-block;
+      width: $size;
+      height: $size;
+    }
+
+    .metadata {
+      flex: 1;
+
+      h3 {
+        margin: 0;
+
+        .beer-name {
+          letter-spacing: 0.125em;
+          font-weight: 500;
+        }
+      }
+
+      p {
+        max-width: 640px;
+        padding-right: 12px;
+      }
+    }
+
+    .inline-edit-field {
+      border: 0;
+      letter-spacing: 0.125em;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.87);
+      border-bottom: 1px dashed #666;
+      padding-right: 36px;
+    }
+
+    h3 {
+      height: 40px;
+      display: flex;
+      align-items: center;
+
+      .beer-name:hover {
+        cursor: pointer;
+      }
+    }
+
+    .beer-description:hover {
+      cursor: pointer;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .input-field-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &-beer-name {
+        display: inline-block;
+      }
+    }
+
+    .save-button {
+      color: #2ea436;
+    }
+
+    @media only screen and (max-width: $mobileWidth) {
+      display: block;
+
+      h3 {
+        justify-content: center;
+      }
+
+      img {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 16px;
+      }
+
+      .alcohol-percentage {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .input-field-buttons-beer-name {
+        display: flex;
+      }
+    }
+  }
+}

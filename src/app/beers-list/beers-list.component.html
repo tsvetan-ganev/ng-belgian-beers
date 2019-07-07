@@ -36,19 +36,11 @@
   </header>
   <mat-card-content>
     <ul class="beer-list">
-      <li class="beer-list-item" *ngFor="let beer of beersList">
-        <img src="/assets/images/{{ beer.id }}.jpg" [alt]="beer.name" />
-
-        <div class="beer-list-item__metadata">
-          <h3>
-            <span class="beer-name">{{ beer.name }}</span>
-            <span class="alcohol-percentage mat-bg-accent">{{ beer.alcohol }}%</span>
-          </h3>
-          <p>
-            {{ beer.description }}
-          </p>
-        </div>
-      </li>
+      <app-beer-list-item
+        [beer]="beer"
+        *ngFor="let beer of beersList"
+        (beerChanged)="onBeerChanged($event)"
+      ></app-beer-list-item>
     </ul>
   </mat-card-content>
 </mat-card>

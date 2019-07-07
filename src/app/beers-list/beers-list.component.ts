@@ -22,11 +22,6 @@ export class BeersListComponent implements OnInit {
 
   public sortingOptions = [
     {
-      label: 'Default',
-      key: 'default',
-      sortFunction: () => 1
-    },
-    {
       label: 'Name Ascending',
       key: 'name_asc',
       sortFunction: sortByNameAscending
@@ -81,15 +76,23 @@ export class BeersListComponent implements OnInit {
   }
 
   onSortOptionChange(event: MatSelectChange) {
-    this.beersList = this.beersOriginal
-      .filter(beer => beer.alcohol <= this.alcoholPercentageFilter)
-      .sort(event.source.value.sortFunction)
+    this.getBeers()
   }
 
   onAlcoholSliderChange(event: MatSliderChange) {
     this.alcoholPercentageFilter = event.value
+    this.getBeers()
+  }
+
+  getBeers() {
     this.beersList = this.beersOriginal
       .filter(beer => beer.alcohol <= this.alcoholPercentageFilter)
       .sort(this.headerControls.get('sort').value.sortFunction)
+  }
+
+  onBeerChanged(beer: Beer) {
+    this.beerService.editBeer(beer.id, beer)
+    this.beersOriginal = this.beerService.getAll()
+    this.getBeers()
   }
 }

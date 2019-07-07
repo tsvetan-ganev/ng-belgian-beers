@@ -1,0 +1,79 @@
+<li class="beer-list-item">
+  <form [formGroup]="beerForm">
+    <img src="/assets/images/{{ beer.id }}.jpg" [alt]="beer.name" />
+
+    <div class="metadata">
+      <h3>
+        <span class="beer-name" *ngIf="!beerNameEditMode" (click)="toggleEditName(true)">
+          {{ beer.name }}
+        </span>
+        <span *ngIf="beerNameEditMode">
+          <input
+            type="text"
+            class="inline-edit-field"
+            (keyup.escape)="toggleEditName(false)"
+            (keyup.enter)="updateBeer('name')"
+            formControlName="name"
+            [value]="beer.name"
+          />
+          <span class="input-field-buttons input-field-buttons-beer-name">
+            <button
+              mat-icon-button
+              class="save-button"
+              (click)="updateBeer('name')"
+              matTooltip="Save"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="toggleEditName(false)"
+              color="warn"
+              matTooltip="Cancel"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </span>
+        </span>
+        <span class="alcohol-percentage mat-bg-accent">{{ beer.alcohol }}%</span>
+      </h3>
+      <p
+        class="beer-description"
+        *ngIf="!beerDescriptionEditMode"
+        (click)="toggleEditDescription(true)"
+      >
+        {{ beer.description }}
+      </p>
+      <div class="description-input-field" *ngIf="beerDescriptionEditMode">
+        <mat-form-field>
+          <textarea
+            matInput
+            [matTextareaAutosize]="true"
+            (keyup.escape)="toggleEditDescription(false)"
+            formControlName="description"
+            [value]="beer.description"
+          >
+          </textarea>
+        </mat-form-field>
+        <div class="input-field-buttons">
+          <button
+            mat-icon-button
+            class="save-button"
+            (click)="updateBeer('description')"
+            matTooltip="Save"
+          >
+            <mat-icon>done</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="toggleEditDescription(false)"
+            color="warn"
+            matTooltip="Cancel"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</li>
