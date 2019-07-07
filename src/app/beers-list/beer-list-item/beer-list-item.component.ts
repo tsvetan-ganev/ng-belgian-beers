@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Beer } from 'src/app/core/interfaces'
+
+interface BeerInputFieldsEditMode {
+  name: boolean
+  description: boolean
+  alcohol: boolean
+}
 
 @Component({
   selector: 'app-beer-list-item',
@@ -11,8 +17,14 @@ export class BeerListItemComponent implements OnInit {
   @Input() beer: Beer
   @Output() beerChanged = new EventEmitter()
 
-  public beerNameEditMode = false
-  public beerDescriptionEditMode = false
+  public ALCOHOL_MIN = 0
+  public ALCOHOL_MAX = 16
+
+  public editMode: BeerInputFieldsEditMode = {
+    name: false,
+    description: false,
+    alcohol: false
+  }
   public beerForm: FormGroup
 
   constructor(private fb: FormBuilder) {}
@@ -20,34 +32,35 @@ export class BeerListItemComponent implements OnInit {
   ngOnInit() {
     this.beerForm = this.fb.group({
       name: [''],
-      description: ['']
+      description: [''],
+      alcohol: ['', [Validators.min(this.ALCOHOL_MIN), Validators.max(this.ALCOHOL_MAX)]]
     })
   }
 
-  toggleEditName(value: boolean) {
-    this.beerNameEditMode = value
+  toggleEdit(field: keyof BeerInputFieldsEditMode, value: boolean) {
+    this.editMode[field] = value
+    if (value) {
+      setTimeout(() => {
+        console.log(this.beerForm.get(field))
+      }, 60)
+    }
   }
 
-  toggleEditDescription(value: boolean) {
-    this.beerDescriptionEditMode = value
-  }
+  updateBeer(field: keyof BeerInputFieldsEditMode) {
+    if (!this.beerForm.valid) {
+      return
+    }
 
-  updateBeer(field: string) {
     this.beerChanged.emit(
       Object.assign(
         {},
         this.beer,
         { name: this.beerForm.get('name').value },
-        { description: this.beerForm.get('description').value }
+        { description: this.beerForm.get('description').value },
+        { alcohol: Number(this.beerForm.get('alcohol').value) }
       )
     )
 
-    if (field === 'name') {
-      this.beerNameEditMode = false
-    }
-
-    if (field === 'description') {
-      this.beerDescriptionEditMode = false
-    }
+    this.editMode[field] = false
   }
 }

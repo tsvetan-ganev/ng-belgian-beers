@@ -21,12 +21,16 @@ export class BeerService {
       return
     }
 
-    if (updates.name) {
+    if (updates.name && updates.name !== beerToEdit.name) {
       beerToEdit.name = updates.name
     }
 
-    if (updates.description) {
+    if (updates.description && updates.description !== beerToEdit.description) {
       beerToEdit.description = updates.description
+    }
+
+    if (typeof updates.alcohol === 'number' && updates.alcohol >= 0 && updates.alcohol <= 16) {
+      beerToEdit.alcohol = updates.alcohol
     }
   }
 }

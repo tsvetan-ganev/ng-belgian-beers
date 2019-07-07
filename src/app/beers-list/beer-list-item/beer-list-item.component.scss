@@ -93,6 +93,22 @@ $mobileWidth: 420px;
       }
     }
 
+    .alcohol-percentage-input-wrapper {
+      font-weight: normal;
+      input {
+        box-sizing: border-box;
+        max-width: 52px;
+        color: white;
+        outline: 0;
+        font-size: 16px;
+        border-width: 0;
+
+        &.ng-invalid {
+          color: red;
+        }
+      }
+    }
+
     .save-button {
       color: #2ea436;
     }

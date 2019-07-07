@@ -44,7 +44,7 @@ export class BeersListComponent implements OnInit {
   ]
 
   public alcoholBoundaries = {
-    min: 4,
+    min: 0,
     max: 16
   }
 
@@ -60,19 +60,9 @@ export class BeersListComponent implements OnInit {
     })
     this.beersOriginal = this.beerService.getAll()
 
-    this.alcoholBoundaries = this.beersOriginal.reduce(
-      (accumulated, beer) => {
-        return {
-          min: Math.min(accumulated.min, beer.alcohol),
-          max: Math.max(accumulated.max, beer.alcohol)
-        }
-      },
-      { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_VALUE }
-    )
-
-    this.alcoholPercentageFilter = this.alcoholBoundaries.max
-
     this.beersList = this.beersOriginal.slice()
+    this.alcoholBoundaries = this.getAlcoholFilterBoundaries()
+    this.alcoholPercentageFilter = this.alcoholBoundaries.max
   }
 
   onSortOptionChange(event: MatSelectChange) {
@@ -90,9 +80,31 @@ export class BeersListComponent implements OnInit {
       .sort(this.headerControls.get('sort').value.sortFunction)
   }
 
+  getAlcoholFilterBoundaries() {
+    return this.beersOriginal.reduce(
+      (accumulated, beer) => {
+        return {
+          min: Math.min(accumulated.min, beer.alcohol),
+          max: Math.max(accumulated.max, beer.alcohol)
+        }
+      },
+      { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_VALUE }
+    )
+  }
+
   onBeerChanged(beer: Beer) {
     this.beerService.editBeer(beer.id, beer)
     this.beersOriginal = this.beerService.getAll()
+    this.alcoholBoundaries = this.getAlcoholFilterBoundaries()
+
+    if (this.alcoholPercentageFilter > this.alcoholBoundaries.max) {
+      this.alcoholPercentageFilter = this.alcoholBoundaries.max
+    }
+
+    if (this.alcoholPercentageFilter < this.alcoholBoundaries.min) {
+      this.alcoholPercentageFilter = this.alcoholBoundaries.min
+    }
+
     this.getBeers()
   }
 }
